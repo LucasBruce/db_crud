@@ -61,9 +61,13 @@ create table if not exists tbl_endereco_cliente(
   id_cliente int not null,
   id_tipo_logradouro int not null,
   constraint fk_id_endereco_cliente_id_cliente foreign key (id_cliente)
-    references tbl_cliente (id_cliente),
+    references tbl_cliente (id_cliente)
+    on delete cascade
+    on update cascade,
   constraint fk_id_endereco_cliente_id_tipo_logradouro foreign key (id_tipo_logradouro)
     references tbl_tipo_logradouro(id_tipo_logradouro)
+    on delete cascade
+    on update cascade
 );
 
 create table if not exists tbl_tipo_telefone(
@@ -77,9 +81,26 @@ create table if not exists tbl_telefone_cliente(
   id_cliente int not null,
   id_tipo_telefone int not null,
   constraint fk_id_telefone_cliente_id_cliente foreign key (id_cliente)
-    references tbl_cliente (id_cliente),
+    references tbl_cliente (id_cliente)
+    on delete cascade
+    on update cascade,
   constraint fk_id_telefone_cliente_id_tipo_telefone foreign key (id_tipo_telefone)
     references tbl_tipo_telefone(id_tipo_telefone)
+    on delete cascade
+    on update cascade
 );
 
-
+insert into tbl_cliente(nome_cliente, email_cliente)
+  values
+  ('Linsus Torvalds', 'linus@linux.com');
+  
+insert into tbl_tipo_logradouro(tipo_logradouro)
+ values
+ ('aeroporto'), ('alameda'), ('área'), ('avenida'),
+ ('campo'), ('chácara'), ('colônia'), ('condomínio'), 
+ ('conjunto'), ('distrito'), ('esplanada'), ('estação'),
+ ('estrada');
+  
+drop table tbl_endereco_cliente;
+drop table tbl_telefone_cliente;
+   
